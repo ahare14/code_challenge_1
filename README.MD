@@ -15,3 +15,9 @@
 5. The elevator doesn't do any prioritization when creating the journey (eg. it should probably order the stops if its a fresh list)
 6. There is no way to make the elevator faster (or upgraded) after its been created
 7. 
+
+## How to Run:
+1. clone repo
+2. Run `npm install` in console
+3. Run `npm start` in console
+3. Look at output in console.
