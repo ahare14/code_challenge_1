@@ -1,6 +1,6 @@
 interface IElevator {
   multiFloorStop(floors: number[]): number[];
-  travelTime(numOfStops: number): number;
+  travelTime(startFloor: number, endFloor: number): number;
   singleFloorDuration: number;
 }
 
@@ -11,7 +11,7 @@ class Elevator implements IElevator {
 
   /**
    * Create the elevator allowing for the speed to be set (assuming this in seconds)
-   * @param speed 
+   * @param speed
    */
   constructor(speed = 10) {
     this.singleFloorDuration = speed;
@@ -21,8 +21,8 @@ class Elevator implements IElevator {
    * This takes in an array of floors (numbers) and scrubs the floors to make sure
    * they are no duplicates. This will then return all floors you have submitted
    * for the trip.
-   * @param floors 
-   * @returns 
+   * @param floors
+   * @returns
    */
   public multiFloorStop(floors: number[]): number[] {
     const uniqueStops: number[] = [...new Set(floors)];
@@ -32,11 +32,14 @@ class Elevator implements IElevator {
 
   /**
    * Takes in a number of stops and returns the duration.
-   * @param numOfStops 
-   * @returns 
+   * @param numOfStops
+   * @returns
    */
-  public travelTime(numOfStops: number): number {
-    return this.singleFloorDuration * numOfStops;
+  public travelTime(startFloor: number, endFloor: number): number {
+    const start: number = typeof (startFloor) === "number" ? startFloor : 0;
+    const end: number = typeof (endFloor) === "number" ? endFloor : 0;
+    const floorDiff: number = Math.abs(start - end);
+    return this.singleFloorDuration * floorDiff;
   }
 
   /**
@@ -44,27 +47,35 @@ class Elevator implements IElevator {
    * eg. If you want to start from floor 10 the function will start from floor 10 iterate
    * to the end. Then start from the beginning of the array back to your starting index.
    * This returns the total journey time and the array of stops in order of completion.
-   * @param startPoint 
-   * @returns 
+   * @param startPoint
+   * @returns
    */
   public runElevator(startPoint?: number): [number, number[]] {
-    const numOfStops: number = this.floorStops.length;
+    let timeCounter = 0;
     let index = 0;
 
     if (startPoint !== undefined) {
       index = this.floorStops.indexOf(startPoint);
     }
 
-    for (let i = index; i < numOfStops; i++) {
+    for (let i = index; i < this.floorStops.length; i++) {
       this.visitedFloors.push(this.floorStops[i]);
+      timeCounter += this.travelTime(
+        this.floorStops[i],
+        this.floorStops[i + 1]
+      );
     }
 
     for (let i = 0; i < index; i++) {
       this.visitedFloors.push(this.floorStops[i]);
+      timeCounter += this.travelTime(
+        this.floorStops[i],
+        this.floorStops[i + 1]
+      );
     }
 
     this.floorStops = [];
-    return [this.travelTime(numOfStops), [...this.visitedFloors]];
+    return [timeCounter, [...this.visitedFloors]];
   }
 }
 
@@ -72,7 +83,8 @@ class Elevator implements IElevator {
  I am instating two elevators, to show one that has a specified
  starting point and one that just starts from the beginning of the
  array of floors it received.  You will notice in the output the time
- it takes is slightly different as well as the order it visited the stops
+ it takes is the same but the order is slightly different for the 
+ floors visited.
 */
 const elevator: Elevator = new Elevator();
 const elevatorWithStartPoint: Elevator = new Elevator();
@@ -86,5 +98,5 @@ elevatorWithStartPoint.multiFloorStop(floorToStop);
 const elevatorRun = elevator.runElevator();
 const elevatorRunStartPoint = elevatorWithStartPoint.runElevator(7);
 
-console.log("Elevator run with no start point specified: ", elevatorRun);
-console.log("Elevator run starting at the 7th floor", elevatorRunStartPoint);
+console.log('Elevator run with no start point specified: ', elevatorRun);
+console.log('Elevator run starting at the 7th floor', elevatorRunStartPoint);
