@@ -31,13 +31,15 @@ class Elevator implements IElevator {
   }
 
   /**
-   * Takes in a number of stops and returns the duration.
-   * @param numOfStops
+   * Function to calculate the duration of an elevator trip from floor A to
+   * floor B.  This uses the speed set during initialization of the class.
+   * @param startFloor
+   * @param endFloor
    * @returns
    */
   public travelTime(startFloor: number, endFloor: number): number {
-    const start: number = typeof (startFloor) === "number" ? startFloor : 0;
-    const end: number = typeof (endFloor) === "number" ? endFloor : 0;
+    const start: number = typeof startFloor === 'number' ? startFloor : 0;
+    const end: number = typeof endFloor === 'number' ? endFloor : 0;
     const floorDiff: number = Math.abs(start - end);
     return this.singleFloorDuration * floorDiff;
   }
@@ -83,7 +85,7 @@ class Elevator implements IElevator {
  I am instating two elevators, to show one that has a specified
  starting point and one that just starts from the beginning of the
  array of floors it received.  You will notice in the output the time
- it takes is the same but the order is slightly different for the 
+ it takes is the same but the order is slightly different for the
  floors visited.
 */
 const elevator: Elevator = new Elevator();
@@ -96,7 +98,10 @@ elevator.multiFloorStop(floorToStop);
 elevatorWithStartPoint.multiFloorStop(floorToStop);
 
 const elevatorRun = elevator.runElevator();
-const elevatorRunStartPoint = elevatorWithStartPoint.runElevator(7);
+const elevatorRunStartPoint = elevatorWithStartPoint.runElevator(14);
 
-console.log('Elevator run with no start point specified: ', elevatorRun);
-console.log('Elevator run starting at the 7th floor', elevatorRunStartPoint);
+console.log('Elevator run with no start point specified: \n', elevatorRun);
+console.log(
+  'Elevator run starting at the 7th floor: \n',
+  elevatorRunStartPoint
+);
