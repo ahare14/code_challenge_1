@@ -18,7 +18,8 @@
 8. There should be an ability to set a priority ride, i.e. if a maintenance person needs to ride the elevator and skip some stops.
 9. Missing the the ability for a rider to call out and have it safely return to the first floor.
 10. The time is assumed to be in seconds.
-11. It is assumed that the speed doesn't change at all even if there is large gap between the current floor and the next. 
+11. It is assumed that the speed doesn't change at all even if there is large gap between the current floor and the next.
+12. It is assumed the starting floor is in the list of destination floors.
 
 ## How to Run:
 1. Clone repo

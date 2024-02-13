@@ -94,14 +94,16 @@ const floorToStop: number[] = [
   12, 4, 8, 9, 10, 12, 12, 14, 9, 7, 6, 8, 14, 16, 15, 19,
 ];
 
+const startingFloor: number = 14;
+
 elevator.multiFloorStop(floorToStop);
 elevatorWithStartPoint.multiFloorStop(floorToStop);
 
 const elevatorRun = elevator.runElevator();
-const elevatorRunStartPoint = elevatorWithStartPoint.runElevator(14);
+const elevatorRunStartPoint = elevatorWithStartPoint.runElevator(startingFloor);
 
 console.log('Elevator run with no start point specified: \n', elevatorRun);
 console.log(
-  'Elevator run starting at the 7th floor: \n',
+  `Elevator run starting at the ${startingFloor}th floor: \n`,
   elevatorRunStartPoint
 );
