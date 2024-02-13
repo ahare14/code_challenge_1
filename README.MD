@@ -21,7 +21,7 @@
 11. It is assumed that the speed doesn't change at all even if there is large gap between the current floor and the next. 
 
 ## How to Run:
-1. clone repo
+1. Clone repo
 2. Run `npm install` in console
 3. Run `npm start` in console
 3. Look at output in console
